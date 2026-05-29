@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>點開，就有收獲</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto_Serif_TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fcfbfa;       /* 溫潤的米白底色 */
+            --text-color: #3e3a36;     /* 深炭灰文字，比純黑更溫柔 */
+            --accent-color: #607254;   /* 苔綠色，展現台灣風土與植物感 */
+            --border-color: #e8e5e0;   /* 淺灰線條 */
+        }
+        
+        body {
+            font-family: 'Noto Serif TC', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            margin: 0;
+            padding: 50px 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 650px;
+            width: 100%;
+        }
+
+        /* 文青風標頭設計 */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: 6px;
+            margin-bottom: 12px;
+            color: var(--text-color);
+        }
+
+        header .subtitle {
+            font-size: 0.95rem;
+            color: #8c857b;
+            letter-spacing: 3px;
+            font-weight: 400;
+        }
+
+        /* 文章列表資料庫 */
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .article-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background-color: #ffffff;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        /* 懸浮時的文青感漸變 */
+        .article-item:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(96, 114, 84, 0.1);
+        }
+
+        /* 不同文章的小圖示區塊 */
+        .icon {
+            font-size: 1.6rem;
+            margin-right: 18px;
+            margin-top: -2px;
+            min-width: 35px;
+            text-align: center;
+        }
+
+        .content {
+            flex: 1;
+        }
+
+        .title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-color);
+            line-height: 1.5;
+        }
+
+        .url-box {
+            display: flex;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--accent-color);
+        }
+
+        .url-text {
+            word-break: break-all;
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 100px;
+            font-size: 0.85rem;
+            color: #b5aea4;
+            letter-spacing: 2px;
+        }
+
+        /* RDO 手機與平板完美適應 */
+        @media (max-width: 480px) {
+            body { padding: 30px 16px; }
+            header { margin-bottom: 40px; }
+            header h1 { font-size: 1.8rem; letter-spacing: 4px; }
+            .article-item { padding: 16px; }
+            .title { font-size: 1.05rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>點開，就有收獲</h1>
+            <div class="subtitle">閱讀台灣的風土與生態智慧</div>
+        </header>
+
+        <main class="article-list">
+
+            <a href="https://is.gd/GgpqGp" target="_blank" class="article-item">
+                <div class="icon">🌿</div>
+                <div class="content">
+                    <div class="title">台灣特有種植物的生態智慧：感受台灣風土</div>
+                    <div class="url-box">
+                        <span class="url-text">https://is.gd/GgpqGp</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="https://is.gd/Msa9FE" target="_blank" class="article-item">
+                <div class="icon">📖</div>
+                <div class="content">
+                    <div class="title">Ethnobotanical Taiwan: The Wisdom of Native Plants</div>
+                    <div class="url-box">
+                        <span class="url-text">https://is.gd/Msa9FE</span>
+                    </div>
+                </div>
+            </a>
+
+
+            刪除即可啟用。圖示可以隨意換成喜歡的 emoji（如 🌸, 🍁, 🌲）。
+                 ======================================================= -->
+            </main>
+        <footer>
+            <p>© 點開，就有收獲 ・ 文章資料庫</p>
+        </footer>
+    </div>
+
+</body>
+</html>
