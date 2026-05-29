@@ -10,8 +10,8 @@
     <style>
         :root {
             --bg-color: #fcfbfa;       /* 溫潤的米白底色 */
-            --text-color: #3e3a36;     /* 深炭灰文字，比純黑更溫柔 */
-            --accent-color: #607254;   /* 苔綠色，展現台灣風土與植物感 */
+            --text-color: #3e3a36;     /* 深炭灰文字 */
+            --accent-color: #607254;   /* 苔綠色 */
             --border-color: #e8e5e0;   /* 淺灰線條 */
         }
         
@@ -31,7 +31,7 @@
             width: 100%;
         }
 
-        /* 文青風標頭設計 */
+        /* 文青風標頭 */
         header {
             text-align: center;
             margin-bottom: 60px;
@@ -51,7 +51,6 @@
             font-size: 0.95rem;
             color: #8c857b;
             letter-spacing: 3px;
-            font-weight: 400;
         }
 
         /* 文章列表資料庫 */
@@ -74,14 +73,12 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.02);
         }
 
-        /* 懸浮時的文青感漸變 */
         .article-item:hover {
             border-color: var(--accent-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(96, 114, 84, 0.1);
         }
 
-        /* 不同文章的小圖示區塊 */
         .icon {
             font-size: 1.6rem;
             margin-right: 18px;
@@ -114,6 +111,14 @@
             text-decoration: underline;
         }
 
+        /* 載入中與錯誤訊息提示 */
+        .status-msg {
+            text-align: center;
+            color: #8c857b;
+            font-style: italic;
+            padding: 40px 0;
+        }
+
         footer {
             text-align: center;
             margin-top: 100px;
@@ -122,7 +127,6 @@
             letter-spacing: 2px;
         }
 
-        /* RDO 手機與平板完美適應 */
         @media (max-width: 480px) {
             body { padding: 30px 16px; }
             header { margin-bottom: 40px; }
@@ -140,44 +144,78 @@
             <div class="subtitle">閱讀台灣的風土與生態智慧</div>
         </header>
 
-        <main class="article-list">
+        <main class="article-list" id="article-container">
+            <div class="status-msg">正在翻閱文章札記...</div>
+        </main>
 
-            <a href="https://is.gd/GgpqGp" target="_blank" class="article-item">
-                <div class="icon">🌿</div>
-                <div class="content">
-                    <div class="title">台灣特有種植物的生態智慧：感受台灣風土</div>
-                    <div class="url-box">
-                        <span class="url-text">https://is.gd/GgpqGp</span>
-                    </div>
-                </div>
-            </a>
-
-            <a href="https://is.gd/Msa9FE" target="_blank" class="article-item">
-                <div class="icon">📖</div>
-                <div class="content">
-                    <div class="title">Ethnobotanical Taiwan: The Wisdom of Native Plants</div>
-                    <div class="url-box">
-                        <span class="url-text">https://is.gd/Msa9FE</span>
-                    </div>
-                </div>
-            </a>
-
- <a href="https://is.gd/Msa9FE" target="_blank" class="article-item">
-                <div class="icon">📖</div>
-                <div class="content">
-                    <div class="title">The High Art of Truku Cuisine: Dajili Tribal House</div>
-                    <div class="url-box">
-                        <span class="url-text">https://is.gd/unmv3S</span>
-                    </div>
-                </div>
-            </a>
-            刪除即可啟用。圖示可以隨意換成喜歡的 emoji（如 🌸, 🍁, 🌲）。
-                 ======================================================= -->
-            </main>
         <footer>
             <p>© 點開，就有收獲 ・ 文章資料庫</p>
         </footer>
     </div>
 
+    <script>
+        // ⚠️ 請在下方單引號內，替換上你的 Google 試算表 ID
+        const SPREADSHEET_ID = '1HHu0LPLLwQk6u5-SMmCba_7IoyHJRhlbFaFNhdfiQPE/edit?resourcekey=&gid=1858012079#gid=1858012079';
+        
+        // 內建隨機小圖示庫（網頁會自動幫每篇文章分配不同的文青風圖示）
+        const icons = ["🌿", "📖", "🌲", "🍁", "🌸", "☕", "📝", "🌾", "⛰️", "🦉", "🎨", "🌊"];
+
+        async function fetchArticles() {
+            const container = document.getElementById('article-container');
+            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json`;
+
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                
+                // 解析 Google 試算表特有的 JSON 格式
+                const jsonText = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+                const data = JSON.parse(jsonText);
+                const rows = data.table.rows;
+
+                if (!rows || rows.length === 0) {
+                    container.innerHTML = '<div class="status-msg">目前還沒有收藏的文章。</div>';
+                    return;
+                }
+
+                let htmlContent = '';
+                
+                // 逐行讀取試算表（最新填寫的文章會排在最上面）
+                for (let i = rows.length - 1; i >= 0; i--) {
+                    const row = rows[i];
+                    
+                    // 假設表單產生的欄位：時間戳記(A欄)、文章標題(B欄)、文章網址(C欄)
+                    const title = row.c[1] ? row.c[1].v : '';
+                    const articleUrl = row.c[2] ? row.c[2].v : '';
+
+                    if (title && articleUrl) {
+                        // 根據文章索引隨機或按順序挑選一個 icon
+                        const icon = icons[i % icons.length];
+
+                        htmlContent += `
+                            <a href="${articleUrl}" target="_blank" class="article-item">
+                                <div class="icon">${icon}</div>
+                                <div class="content">
+                                    <div class="title">${title}</div>
+                                    <div class="url-box">
+                                        <span class="url-text">${articleUrl}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        `;
+                    }
+                }
+
+                container.innerHTML = htmlContent;
+
+            } catch (error) {
+                console.error(error);
+                container.innerHTML = '<div class="status-msg">讀取文章失敗，請檢查試算表 ID 是否正確並已發佈到網路。</div>';
+            }
+        }
+
+        // 網頁開啟時自動執行
+        fetchArticles();
+    </script>
 </body>
 </html>
